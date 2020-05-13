@@ -445,6 +445,30 @@ char* htmlspecialchars(const char* s)
 char* indexes(const char* path)
 {
     // TODO
+    int len = strlen(path) + 11;
+    char *tmp_path1 = malloc(len);
+
+    if(!tmp_path1){
+        return NULL;
+    }
+
+    strcpy(tmp_path1,path);
+    strcat(tmp_path1,"index.php");
+
+    if(access(tmp_path1,F_OK) == 0)
+        return tmp_path1;
+
+    char* tmp_path2 = malloc(len);
+
+    if(!tmp_path2)
+        return NULL;
+
+    strcpy(tmp_path2,path);
+    strcat(tmp_path2,"index.html");
+
+    if(access(tmp_path2,F_OK) == 0)
+        return tmp_path2;
+
     return NULL;
 }
 
@@ -667,7 +691,7 @@ const char* lookup(const char* path)
  * and its query string at query, both of which are assumed
  * to be at least of length LimitRequestLine + 1.
  */
-bool parse(const char* line, char* abs_path, char* query)
+bool parse(const char* line, char* abs_path, char* query)               // ********TEST AND DEBUG IT BEFORE MOVING FURTHER ******
 {
     // TODO
 
